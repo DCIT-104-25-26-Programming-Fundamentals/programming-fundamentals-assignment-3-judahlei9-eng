@@ -72,6 +72,100 @@
 //
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readlineSync = require('readline-sync');
+
+function add(firstOperand, secondOperand) {
+  return firstOperand + secondOperand;
+}
+
+function subtract(firstOperand, secondOperand) {
+  return firstOperand - secondOperand;
+}
+
+function multiply(firstOperand, secondOperand) {
+  return firstOperand * secondOperand;
+}
+
+function divide(firstOperand, secondOperand) {
+  if (secondOperand === 0) {
+    return null;
+  }
+  return firstOperand / secondOperand;
+}
+
+function modulus(firstOperand, secondOperand) {
+  if (secondOperand === 0) {
+    return null;
+  }
+  return firstOperand % secondOperand;
+}
+
+function exponentiate(firstOperand, secondOperand) {
+  return firstOperand ** secondOperand;
+}
+
+function printMenu() {
+  console.log('============================');
+  console.log('     SIMPLE CALCULATOR');
+  console.log('============================');
+  console.log('1. Addition');
+  console.log('2. Subtraction');
+  console.log('3. Multiplication');
+  console.log('4. Division');
+  console.log('5. Modulus');
+  console.log('6. Exponentiation');
+  console.log('7. Quit');
+}
+
+function runOperation(menuChoice, operationSymbol, operationFn, allowsZeroDivisor) {
+  const firstOperand = readlineSync.questionFloat('Enter first number : ');
+  const secondOperand = readlineSync.questionFloat('Enter second number: ');
+
+  if (!allowsZeroDivisor && secondOperand === 0) {
+    console.log('Error: Cannot divide by zero.');
+    return;
+  }
+
+  const outcome = operationFn(firstOperand, secondOperand);
+  console.log(`Result: ${firstOperand} ${operationSymbol} ${secondOperand} = ${outcome.toFixed(2)}`);
+}
+
+function main() {
+  let menuChoice;
+
+  do {
+    printMenu();
+    menuChoice = readlineSync.questionInt('Select an operation (1-7): ');
+
+    switch (menuChoice) {
+      case 1:
+        runOperation(menuChoice, '+', add, true);
+        break;
+      case 2:
+        runOperation(menuChoice, '-', subtract, true);
+        break;
+      case 3:
+        runOperation(menuChoice, '*', multiply, true);
+        break;
+      case 4:
+        runOperation(menuChoice, '/', divide, false);
+        break;
+      case 5:
+        runOperation(menuChoice, '%', modulus, false);
+        break;
+      case 6:
+        runOperation(menuChoice, '**', exponentiate, true);
+        break;
+      case 7:
+        console.log('Goodbye!');
+        break;
+      default:
+        console.log('Error: Please choose a valid option (1-7).');
+    }
+  } while (menuChoice !== 7);
+}
+
+main();
 // =============================================================================
 
 

@@ -52,6 +52,62 @@
 //
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readlineSync = require('readline-sync');
+
+function generateFibonacciTerms(termCount) {
+  const sequence = [0, 1];
+  if (termCount <= 2) {
+    return sequence.slice(0, termCount);
+  }
+
+  for (let index = 2; index < termCount; index++) {
+    sequence.push(sequence[index - 1] + sequence[index - 2]);
+  }
+
+  return sequence;
+}
+
+function isFibonacciNumber(candidate) {
+  let priorTerm = 0;
+  let currentTerm = 1;
+
+  while (currentTerm < candidate) {
+    const nextTerm = priorTerm + currentTerm;
+    priorTerm = currentTerm;
+    currentTerm = nextTerm;
+  }
+
+  return currentTerm === candidate || candidate === 0;
+}
+
+function runFirstNTerms() {
+  const termCount = readlineSync.questionInt('How many terms? ');
+
+  if (termCount <= 0) {
+    console.log('Error: Please enter a positive integer.');
+    return;
+  }
+
+  const sequence = generateFibonacciTerms(termCount);
+  console.log(`Fibonacci sequence: ${sequence.join(' ')}`);
+}
+
+function runMembershipCheck() {
+  const candidate = readlineSync.questionInt('Enter a number to check: ');
+
+  if (isFibonacciNumber(candidate)) {
+    console.log(`${candidate} is a Fibonacci number.`);
+  } else {
+    console.log(`${candidate} is NOT a Fibonacci number.`);
+  }
+}
+
+function main() {
+  runFirstNTerms();
+  runMembershipCheck();
+}
+
+main();
 // =============================================================================
 
 

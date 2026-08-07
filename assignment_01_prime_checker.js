@@ -40,6 +40,34 @@
 //
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readlineSync = require('readline-sync');
+
+// Returns true if candidate has no divisors other than 1 and itself.
+function isPrime(candidate) {
+  if (candidate < 2) {
+    return false;
+  }
+
+  for (let divisor = 2; divisor * divisor <= candidate; divisor++) {
+    if (candidate % divisor === 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function main() {
+  const candidate = readlineSync.questionInt('Enter a number: ');
+
+  if (isPrime(candidate)) {
+    console.log(`${candidate} is a prime number.`);
+  } else {
+    console.log(`${candidate} is NOT a prime number.`);
+  }
+}
+
+main();
 // =============================================================================
 
 

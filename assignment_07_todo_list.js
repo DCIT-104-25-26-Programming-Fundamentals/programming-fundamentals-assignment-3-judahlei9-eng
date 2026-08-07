@@ -79,6 +79,84 @@
 //
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
+const readlineSync = require('readline-sync');
+
+const tasks = [];
+
+function addTask() {
+  const description = readlineSync.question('Enter task: ');
+  tasks.push(description);
+  console.log(`Task added: "${description}"`);
+}
+
+function viewTasks() {
+  if (tasks.length === 0) {
+    console.log('Your task list is empty.');
+    return;
+  }
+
+  console.log('Your Tasks:');
+  for (let taskIndex = 0; taskIndex < tasks.length; taskIndex++) {
+    console.log(`${taskIndex + 1}. ${tasks[taskIndex]}`);
+  }
+}
+
+function deleteTask() {
+  if (tasks.length === 0) {
+    console.log('Your task list is empty.');
+    return;
+  }
+
+  viewTasks();
+  const targetNumber = readlineSync.questionInt('Enter task number to delete: ');
+  const targetIndex = targetNumber - 1;
+
+  if (targetIndex < 0 || targetIndex >= tasks.length) {
+    console.log('Error: Invalid task number.');
+    return;
+  }
+
+  const [removedTask] = tasks.splice(targetIndex, 1);
+  console.log(`Task "${removedTask}" has been removed.`);
+}
+
+function printMenu() {
+  console.log('============================');
+  console.log('     TO-DO LIST MENU');
+  console.log('============================');
+  console.log('1. Add task');
+  console.log('2. View tasks');
+  console.log('3. Delete task');
+  console.log('4. Quit');
+}
+
+function main() {
+  let menuChoice;
+
+  do {
+    printMenu();
+    menuChoice = readlineSync.questionInt('Enter your choice (1-4): ');
+
+    switch (menuChoice) {
+      case 1:
+        addTask();
+        break;
+      case 2:
+        viewTasks();
+        break;
+      case 3:
+        deleteTask();
+        break;
+      case 4:
+        console.log('Goodbye!');
+        break;
+      default:
+        console.log('Error: Please choose a valid option (1-4).');
+    }
+  } while (menuChoice !== 4);
+}
+
+main();
 // =============================================================================
 
 
